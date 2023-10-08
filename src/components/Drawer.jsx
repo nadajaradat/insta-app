@@ -1,23 +1,13 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import InstagramLogo from '../assets/instagram-logo.png';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
@@ -26,9 +16,11 @@ import SlideshowIcon from '@mui/icons-material/Slideshow';
 import ChatIcon from '@mui/icons-material/Chat';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
-const drawerWidth = 240;
+import { useDrawer } from '../contexts/OpenDrawer';
+import { Link } from 'react-router-dom';
+
+const drawerWidth = 335;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -57,7 +49,6 @@ const closedMixin = (theme) => ({
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
-  alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
@@ -66,29 +57,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const ListItemIconWrapper = styled(ListItemIcon)(({ theme, open }) => ({
     minWidth: 0,
     marginRight: open ? theme.spacing(3) : 'auto',
-    justifyContent: 'center',
+    
     '& svg': {
       color: 'white', // Set the color of the icons to white
     },
   }));
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -108,18 +82,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function MiniDrawer() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  const handleDrawerToggle = () =>{
-    setOpen(!open);
-  }
+  const { open, toggleDrawer } = useDrawer();
+ 
 
 
   return (
@@ -128,42 +92,24 @@ export default function MiniDrawer() {
         
 
           
-
-           <List>
-          {[<DrawerHeader 
-        sx={{justifyContent:'center',
+{open?<DrawerHeader 
+        sx={{
         display: 'block'} }
         >
   <img
     src={InstagramLogo}
     alt="instagram logo"
-    style={{ width: '149px', height: '37px' }} 
+    style={{ width: '149px', height: '37px', marginTop:'20px' }} 
+    
     
   />
-</DrawerHeader>].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIconWrapper
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {[
-                   <InstagramIcon />][index]}
-                </ListItemIconWrapper>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>  
+</DrawerHeader>:<InstagramIcon 
+sx={{
+  minHeight: 48,
+  justifyContent: open ? 'initial' : 'center',
+  px: 2.5,
+}}/>}
+        
  
         
         <List>
@@ -174,6 +120,9 @@ export default function MiniDrawer() {
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
+                  '&:hover': {
+                    backgroundColor: '#1D1D1D', // Add your desired hover background color here
+                  },
                 }}
               >
                 <ListItemIconWrapper
@@ -183,7 +132,9 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {[<HomeIcon/>,
+                  {[
+                    <Link to ='/home'>
+                  <HomeIcon/></Link>,
                   <SearchIcon/>,
                   <ExploreIcon/>,
                   <SlideshowIcon/>,
@@ -191,7 +142,7 @@ export default function MiniDrawer() {
                   <FavoriteBorderIcon/>,
                    <AddCircleOutlineIcon/>,
                    
-                   <img/>,
+                   <img src=""/>,
                    ][index]}
                 </ListItemIconWrapper>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
@@ -208,6 +159,9 @@ export default function MiniDrawer() {
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
+                  '&:hover': {
+                    backgroundColor: '#1D1D1D', // Add your desired hover background color here
+                  },
                 }}
               >
                 <ListItemIconWrapper
@@ -215,13 +169,14 @@ export default function MiniDrawer() {
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
+                    
                   }}
                 >
                   {[
                    <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerToggle}
+            onClick={toggleDrawer}
             edge="start"
             
           >
