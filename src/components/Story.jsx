@@ -52,9 +52,12 @@ function Story() {
                   sx={{
                     minWidth: 0,
                     mb: 1, // Add margin between the avatar and text
+                    backgroundImage: 'linear-gradient(#e66465, #9198e5)',
+                    border: '2.5px solid ',
+                    borderRadius:'50%'
                   }}
                 >
-                  <Avatar alt={item.name} src={item.image} align="center" style={{ border: '2px solid red', borderRadius: '50%' }} />
+                  <Avatar alt={item.name} src={item.image} align="center" style={{ backgroundColor: 'black' }} />
                 </ListItemIconWrapper>
                 <Typography variant="caption" align="center">{item.name}</Typography>
               </ListItemButton>
