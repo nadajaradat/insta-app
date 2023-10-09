@@ -54,7 +54,7 @@ function Story() {
                     mb: 1, // Add margin between the avatar and text
                   }}
                 >
-                  <Avatar alt={item.name} src={item.image} align="center"/>
+                  <Avatar alt={item.name} src={item.image} align="center" style={{ border: '2px solid red', borderRadius: '50%' }} />
                 </ListItemIconWrapper>
                 <Typography variant="caption" align="center">{item.name}</Typography>
               </ListItemButton>
