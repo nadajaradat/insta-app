@@ -9,6 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InstagramLogo from '../assets/instagram-logo.png';
+import shop_assistant from '../assets/Avatars/shop-assistant.png'
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import ExploreIcon from '@mui/icons-material/Explore';
@@ -19,6 +20,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { useDrawer } from '../contexts/OpenDrawer';
 import { Link } from 'react-router-dom';
+import { Avatar } from '@mui/material';
 
 const drawerWidth = 335;
 
@@ -142,7 +144,7 @@ sx={{
                   <FavoriteBorderIcon/>,
                    <AddCircleOutlineIcon/>,
                    
-                   <img src=""/>,
+                   <Avatar alt="Nada" src={shop_assistant}/>
                    ][index]}
                 </ListItemIconWrapper>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
