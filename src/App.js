@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import  Drawer  from "./components/Drawer";
 function App() {
   return (
-    <div className="App">
+    <div className='App' style={{backgroundColor:'black'}}>
       <BrowserRouter>
         <Routes element={<Drawer/>}>
           <Route element={<SignIn />} path="/" />

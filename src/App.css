@@ -1,4 +1,43 @@
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #111213;
 }
+/* Custom scrollbar styles */
+.scrollable-list-container {
+  overflow-y: auto;
+  scrollbar-width: 2px;
+  scrollbar-color: #111111 #131313;
+  max-height: 400px; /* Adjust the maximum height as needed */
+}
+
+.scrollable-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-list-container::-webkit-scrollbar-track {
+  background: #070707;
+}
+
+.scrollable-list-container::-webkit-scrollbar-thumb {
+  background-color: #0f0f0f;
+  border-radius: 10px;
+}
+
+/* Add a horizontal line or effect to the right side of the drawer */
+.custom-drawer .MuiDrawer-paper {
+  border-right: 2px solid #cccccc15; /* Adjust the color and width as needed */
+  background-color: black;
+  color: white;
+  padding: 5px;
+  /* Add other styles as needed */
+}
+
+/* Add a horizontal line or effect to the right side of the Story component */
+.custom-story {
+  border-bottom: 1px solid #cccccc15; /* Adjust the color and width as needed */
+  background-color: black;
+  color: white;
+ 
+  /* Add other styles as needed */
+}
+

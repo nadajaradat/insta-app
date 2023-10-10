@@ -21,8 +21,8 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import { useDrawer } from '../contexts/OpenDrawer';
 import { Link } from 'react-router-dom';
 import { Avatar } from '@mui/material';
-
-const drawerWidth = 335;
+import '../App.css'
+const drawerWidth = 242;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -38,7 +38,7 @@ const openedMixin = (theme) => ({
 const closedMixin = (theme) => ({
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.leavingScreen ,
   }),
   overflowX: 'hidden',
   width: `calc(${theme.spacing(7)} + 1px)`,
@@ -90,7 +90,7 @@ export default function MiniDrawer() {
 
   return (
 
-      <Drawer variant="permanent" open={open} >
+      <Drawer variant="permanent" open={open} className="custom-drawer">
         
 
           
@@ -144,7 +144,7 @@ sx={{
                   <FavoriteBorderIcon/>,
                    <AddCircleOutlineIcon/>,
                    
-                   <Avatar alt="Nada" src={shop_assistant}/>
+                   <Avatar alt="Nada" src={shop_assistant} style={{width:'30px', height:'30px'}}/>
                    ][index]}
                 </ListItemIconWrapper>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
