@@ -13,7 +13,7 @@ function Home() {
     width:'728px',
     marginLeft: open ? '242px' : '65px',
     backgroundColor: 'black',
-    height: '1000px',
+    height: 'auto',
     transition: ' .5s ease', // Add transition for marginLeft
   };
 
