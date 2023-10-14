@@ -188,7 +188,8 @@ sx={{
                     <Link to ='/home'>
                   <HomeIcon/></Link>,
                   <SearchIcon/>,
-                  <ExploreIcon/>,
+                  <Link to = '/explore'>
+                  <ExploreIcon/></Link>,
                   <SlideshowIcon/>,
                   <Link to ='/messages'>
                   <ChatIcon/></Link>, 

@@ -12,7 +12,7 @@ function Posts({ posts }) {
   const { open, toggleDrawer } = useDrawer();
 
   return (
-    <List style={{ width: '500px', backgroundColor: 'black', marginLeft: '30px' }}>
+    <List style={{ width: '500px', backgroundColor: 'black', marginLeft: '30px',minHeight:'1000px' }}>
       {sortedPosts.map((post) => (
         <div key={post.id}>
           <div

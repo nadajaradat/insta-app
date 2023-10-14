@@ -49,7 +49,7 @@ function Home() {
   };
 
   return (
-    <div >
+    <div style={{backgroundColor:'black',width:'100%'}}>
       <Drawer setPosts={setPosts} />
       <Container style={containerStyles}>
         <div style={drawerStyles}>
