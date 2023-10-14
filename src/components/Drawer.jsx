@@ -85,7 +85,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer(props) {
+export default function MiniDrawer({setPosts}) {
   const { open, toggleDrawer } = useDrawer();
   const [openModal, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -101,7 +101,8 @@ export default function MiniDrawer(props) {
   };
 
   const handleImageChange = (event) => {
-    const file = event.target.files[0];
+    if (event.target && event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
     setImage(file);
 
     const reader = new FileReader();
@@ -109,13 +110,14 @@ export default function MiniDrawer(props) {
       setImageCover(reader.result);
     };
     reader.readAsDataURL(file);
+  }
   };
 
   let formData = new FormData();
 
   formData.append("description", description)
   formData.append("image", image)
-  const [memories, setMemories] = React.useState([]);
+  
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -126,8 +128,8 @@ export default function MiniDrawer(props) {
         "Content-Type": "multipart/form-data"
       }
     }).then((response) => {
-      console.log("🚀 ~ file: CreateMemory.jsx:59 ~ handleSubmit ~ response:", response)
-      setMemories((prevMomeris) => [...prevMomeris, response.data])
+      console.log("🚀 ~ file: CreatePost.jsx:59 ~ handleSubmit ~ response:", response)
+      setPosts((prevPosts) => [...prevPosts, response.data])
     }).catch((error) => {
       console.log("Error:", error)
     })
@@ -298,36 +300,43 @@ sx={{
           />
         )}
 
-        <label htmlFor="image-upload">
-          <Button
-            variant="contained"
-            component="span"
-            sx={{
-              fontFamily: "Signika",
-              width: "100%",
-              textAlign: "left",
-              fontWeight: 900,
-              marginBottom: "5px",
-              paddingTop: "5px",
-              paddingBottom: "5px",
-              borderRadius: "10px",
-              fontSize: "14px",
-              color: "white",
-              backgroundColor: "#0095F6",
-              ":hover": {
-                bgcolor: "#0095F70",
-                color: "white",
-              },
-              "&:active": {
-                boxShadow: "none",
-                backgroundColor: "#0095F6",
-                color: "white",
-              },
-            }}
-          >
-            Choose Image
-          </Button>
-        </label>
+<input
+  type="file"
+  id="image-upload"
+  onChange={handleImageChange}
+  style={{ display: 'none' }}
+/>
+<label htmlFor="image-upload">
+  <Button
+    variant="contained"
+    component="span"
+    sx={{
+      fontFamily: 'Signika',
+      width: '100%',
+      textAlign: 'left',
+      fontWeight: 900,
+      marginBottom: '5px',
+      paddingTop: '5px',
+      paddingBottom: '5px',
+      borderRadius: '10px',
+      fontSize: '14px',
+      color: 'white',
+      backgroundColor: '#0095F6',
+      ':hover': {
+        bgcolor: '#0095F70',
+        color: 'white',
+      },
+      '&:active': {
+        boxShadow: 'none',
+        backgroundColor: '#0095F6',
+        color: 'white',
+      },
+    }}
+  >
+    Choose Image
+  </Button>
+</label>
+
         <Button
           type="submit"
           variant="contained"

@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Drawer from '../components/Drawer';
 import Story from '../components/Story';
 import Posts from '../components/Posts';
 import Suggestions from '../components/Suggestions';
 import Container from '@mui/material/Container';
 import { useDrawer } from '../contexts/OpenDrawer';
+import axios from 'axios';
 
 function Home() {
   const { open, toggleDrawer } = useDrawer();
 
+  const [posts, setPosts] = useState([]);
+  const token = localStorage.getItem("token")
+
+  useEffect(() => {
+    axios.get("http://16.170.173.197/posts", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      setPosts(response.data.posts)
+    }).catch((error) => {
+      console.log("Error Fedching Posts", error)
+    })
+  }, [])
   const containerStyles = {
     display: 'flex',
     flexDirection: 'row',
@@ -35,14 +50,14 @@ function Home() {
 
   return (
     <div >
-      <Drawer />
+      <Drawer setPosts={setPosts} />
       <Container style={containerStyles}>
         <div style={drawerStyles}>
           <Drawer />
         </div>
         <div style={contentStyles}>
           <Story />
-          <Posts />
+          <Posts posts={posts} />
         </div>
         <div style={suggestionsStyles}>
           <Suggestions />
