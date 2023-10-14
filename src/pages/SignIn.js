@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import iphone from "../assets/iPhoneScreen.png";
 import android from "../assets/androidScreen.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Divider, Grid, TextField } from "@mui/material";
-import  Instagram  from "../assets/instagram-logo.png";
-
+import Instagram from "../assets/instagram-logo.png";
+import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
+import axios from "axios";
 export default function OverlappingPhotosLayout() {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: ""
+  });
+  
+  const navigate = useNavigate()
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    axios.post("http://16.170.173.197/users/login", userData)
+      .then((response) => {
+        console.log("🚀 ~ file: SignIn.jsx:57 ~ .then ~ response:", response)
+        const token = response.data.token;
+        localStorage.setItem("token", token)
+        navigate("/home")
+
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
   return (
     <div>
       <Box
@@ -43,8 +64,7 @@ export default function OverlappingPhotosLayout() {
           <img
             src={android}
             alt="Second"
-            style={{ width: "200px",
-             height: "410px" }} // Adjust image size as needed
+            style={{ width: "200px", height: "410px" }} // Adjust image size as needed
           />
         </Box>
 
@@ -56,7 +76,83 @@ export default function OverlappingPhotosLayout() {
             padding: "20px",
           }}
         >
-            <Box
+          <Box
+            sx={{
+              flex: 1,
+              backgroundColor: "#1D1D1D", // Background color for the right section
+              marginLeft: "0px",
+              marginRight: "200px",
+              marginTop: "10px",
+              borderRadius: "10px",
+              padding: "20px"
+            }}
+          >
+            <img src={Instagram} alt="instagram" width={'150px'} />
+
+            <form noValidate sx={{ mt: 3 }} onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    name="email"
+                    placeholder="Mobile Number Or Email"
+                    sx={{ backgroundColor: "lightgray", borderRadius: '10px' }}
+                    value={userData.email}
+                onChange={(e) => {
+                  setUserData({ ...userData, email: e.target.value })
+                }}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    type="password"
+                    id="password"
+
+                    placeholder="Password" 
+                    sx={{ backgroundColor: "lightgray", borderRadius: '10px', color: 'black' }}
+                    value={userData.password}
+                onChange={(e) => {
+                  setUserData({ ...userData, password: e.target.value })
+                }}
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Login
+              </Button>
+            </form>
+            <hr />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              <FacebookOutlinedIcon style={{marginRight:'5px'}}/> Login with Facebook
+            </Button>
+
+            <Link href="#" variant="body2">
+            <div
+              style={{
+                borderRadius: "10px",
+                padding: "20px"
+              }}>
+              Forget password?
+            </div>
+            </Link>
+          </Box>
+          <Box
           sx={{
             flex: 1,
             backgroundColor: "#1D1D1D", // Background color for the right section
@@ -68,66 +164,16 @@ export default function OverlappingPhotosLayout() {
 
           }}
         >
-            <img src={Instagram} alt = "instagram" width={'150px'} ></img>
-            
-          <form noValidate sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-                
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Mobile Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
+            <Grid container justifyContent="center">
+              <Grid item>
+                <Link to="/signup" variant="body2">
+                  <div>Don't have an account?<strong style={{color:'#1976D2'}}>sign up</strong> </div>
+                </Link>
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            
-          </form>
-            <hr/>
-          <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Login with Facebook
-            </Button>
-
-            <div
-            style={{
-            
-                borderRadius: "10px",
-                padding: "20px"
-    
-              }}>
-            forget password?
-            </div>
           </Box>
         </Box>
-        </Box>
+      </Box>
     </div>
   );
 }

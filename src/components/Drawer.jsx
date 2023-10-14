@@ -83,7 +83,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function MiniDrawer() {
+export default function MiniDrawer(props) {
   const { open, toggleDrawer } = useDrawer();
  
 
@@ -140,7 +140,8 @@ sx={{
                   <SearchIcon/>,
                   <ExploreIcon/>,
                   <SlideshowIcon/>,
-                  <ChatIcon/>, 
+                  <Link to ='/messages'>
+                  <ChatIcon/></Link>, 
                   <FavoriteBorderIcon/>,
                    <AddCircleOutlineIcon/>,
                    

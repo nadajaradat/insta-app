@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import iphone from "../assets/iPhoneScreen.png";
 import android from "../assets/androidScreen.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Divider, Grid, TextField } from "@mui/material";
 import  Instagram  from "../assets/instagram-logo.png";
+import axios from "axios";
 
+import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 export default function OverlappingPhotosLayout() {
+  const navigate = useNavigate()
+  const [userData, setUserData] = useState({
+    userName: "",
+    email: "",
+    password: ""
+  });
+  
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    axios.post("http://16.170.173.197/users/signup", userData)
+      .then((response) => {
+        const token = response.data.token;
+        localStorage.setItem("token", token)
+        navigate("/home")
+
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
+
   return (
-    <div>
+    <div style={{backgroundColor: "black", height:'700px'}}>
       <Box
         sx={{
           display: "flex",
@@ -51,9 +74,10 @@ export default function OverlappingPhotosLayout() {
         {/* Right Section */}
         <Box
           sx={{
-            flex: 1,
+            flex:'1 0 30%',
             backgroundColor: "black", // Background color for the right section
             padding: "20px",
+            maxWidth: "600px",
           }}
         >
             <Box
@@ -86,11 +110,11 @@ export default function OverlappingPhotosLayout() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Login with Facebook
+              <FacebookOutlinedIcon style={{marginRight:'5px'}}/>Login with Facebook
             </Button>
             <hr/><br/>
             <Divider/>
-          <form noValidate sx={{ mt: 3 }}>
+          <form noValidate sx={{ mt: 3 }} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
                 
               <Grid item xs={12} sm={12}>
@@ -98,20 +122,32 @@ export default function OverlappingPhotosLayout() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
                   name="email"
-                  autoComplete="email"
+                 
+                  placeholder="Email"
+                  sx={{ backgroundColor: "lightgray", borderRadius: '10px' }}
+                  autoFocus
+                  value={userData.email}
+                  onChange={(e) => {
+                    setUserData({ ...userData, email: e.target.value })
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
-                  autoComplete="given-name"
                   name="username"
                   required
                   fullWidth
+                  height='10px'
                   id="userName"
-                  label="username"
+                  placeholder="Username"
+                  sx={{ backgroundColor: "lightgray", borderRadius: '10px' }}
                   autoFocus
+                  value={userData.userName}
+                  onChange={(e) => {
+                    setUserData({ ...userData, userName: e.target.value })
+                  }}
+                  
                 />
               </Grid>
               <Grid item xs={12}>
@@ -119,10 +155,16 @@ export default function OverlappingPhotosLayout() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  
                   type="password"
                   id="password"
-                  autoComplete="new-password"
+                  placeholder="Password"
+                  sx={{ backgroundColor: "lightgray", borderRadius: '10px' }}
+                 
+                  value={userData.password}
+                  onChange={(e) => {
+                    setUserData({ ...userData, password: e.target.value })
+                  }}
                 />
               </Grid>
             </Grid>
@@ -134,16 +176,31 @@ export default function OverlappingPhotosLayout() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
+            
+          </form>
+          </Box>
+        
+          <Box
+          sx={{
+            flex: 1,
+            backgroundColor: "#1D1D1D", // Background color for the right section
+            marginLeft: "0px",
+            marginRight: "200px",
+            marginTop: "10px",
+            borderRadius: "10px",
+            padding: "20px"
+
+          }}
+        >
+            <Grid container justifyContent="center">
               <Grid item>
-                <Link href="/" variant="body2">
-                  Already have an account? Sign in
+                <Link to="/" variant="body2">
+                  <div>Already have an account?<strong style={{color:'#1976D2'}}>Log in</strong> </div>
                 </Link>
               </Grid>
             </Grid>
-          </form>
           </Box>
-        </Box>
+          </Box>
         </Box>
     </div>
   );
