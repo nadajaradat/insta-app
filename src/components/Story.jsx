@@ -57,7 +57,7 @@ function Story() {
                     borderRadius:'50%'
                   }}
                 >
-                  <Avatar alt={item.name} src={item.image} align="center" style={{ backgroundColor: 'black', width:'56px', height:'56px'}} />
+                  <Avatar alt={item.name} src={item.image} align="center" style={{ backgroundColor: 'black', width:'45px', height:'45px'}} />
                 </ListItemIconWrapper>
                 <Typography variant="caption" color={'white'} align="center">{item.name}</Typography>
               </ListItemButton>

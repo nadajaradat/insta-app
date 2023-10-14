@@ -40,7 +40,7 @@ function Posts() {
     },
   }));
   return (
-    <List style={{ backgroundColor: 'black', marginLeft: '30px' }}>
+    <List style={{ width:'500px',backgroundColor: 'black', marginLeft: '30px' }}>
       {posts.map((post) => (
         <div key={post.id}>
           <ListItemIconWrapper
@@ -52,11 +52,11 @@ function Posts() {
               borderRadius: '50%',
             }}
           >
-            <Avatar alt={post.description} src={post.image} align="center" style={{ backgroundColor: 'black', width: '40px', height: '40px', marginLeft: '45px' }} />
-            <Typography variant="caption" color={'white'} align="center" style={{ marginTop: '10px', marginLeft: '10px' }}>Nada Jaradat .8h</Typography>
+            <Avatar alt={post.description} src={post.image} align="center" style={{ backgroundColor: 'black', width: '38px', height: '38px',  }} />
+            <Typography variant="caption" color={'white'} align="center" style={{ marginTop: '10px', marginLeft:'10px' }}>Nada Jaradat .8h</Typography>
           </ListItemIconWrapper>
 
-          <img alt={post.description} src={post.image} align="center" style={{ backgroundColor: 'black', width: '560px', height: '560px' }} />
+          <img alt={post.description} src={post.image} align="center" style={{ backgroundColor: 'black', width: '500px', height: '560px' }} />
 
           <Box
             sx={{
@@ -68,17 +68,17 @@ function Posts() {
             }}
           >
             
-            <span><FavoriteBorderIcon style={{ color: 'white', marginLeft: '40px' }} /></span>
+            <span><FavoriteBorderIcon style={{ color: 'white',  }} /></span>
             <span><ModeCommentOutlinedIcon style={{ color: 'white', marginLeft: '10px' }} /></span>
             <span><SendOutlinedIcon style={{ color: 'white', marginLeft: '10px' }} /></span>
-            <BookmarkBorderOutlinedIcon style={{ color: 'white', marginLeft: '450px' }} /> {/* Add marginLeft to move to the left */}
+            <BookmarkBorderOutlinedIcon style={{ color: 'white', marginLeft: '380px' }} /> {/* Add marginLeft to move to the left */}
           </Box>
           <Box
           sx={{
             display: 'flex',
             alignItems: 'self-start', 
             color:'white',
-            ml:5,
+        
             mt: 2
           }}>
             774 likes
@@ -89,8 +89,8 @@ function Posts() {
             alignItems: 'self-start', 
             justifyContent:'start',
             color:'white',
-            width:'500px',
-            ml:4,
+            width:'460px',
+         
             mt: 2,
             mb:4
           }}>
