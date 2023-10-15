@@ -19,7 +19,6 @@ function Posts({ posts }) {
             style={{
               display: 'flex',
               alignItems: 'self-start',
-              marginBottom: '10px',
             }}
           >
             <Avatar
@@ -27,7 +26,7 @@ function Posts({ posts }) {
               src={post.image}
               style={{ backgroundColor: 'black', width: '38px', height: '38px' }}
             />
-            <Typography variant="caption" color={'white'} style={{ marginTop: '10px', marginLeft: '10px' }}>
+            <Typography variant="caption" color={'white'} style={{ marginTop: '10px', marginBottom:'5px', marginLeft: '10px' }}>
               Nada Jaradat - {formatDistanceToNow(new Date(post.createdAt))} ago
             </Typography>
           </div>
@@ -68,6 +67,7 @@ function Posts({ posts }) {
               color: 'white',
               width: '460px',
               marginTop: '10px',
+              marginBottom:'60px'
             }}>
             {post.description}
           </Box>
