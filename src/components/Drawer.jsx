@@ -187,17 +187,21 @@ sx={{
                   {[
                     <Link to ='/home'>
                   <HomeIcon/></Link>,
-                  
+
                   <Link to ='/search'>
                   <SearchIcon/></Link>,
 
                   <Link to = '/explore'>
                   <ExploreIcon/></Link>,
-                  <SlideshowIcon/>,
+                  <Link to ='/reels'>
+                  <SlideshowIcon/></Link>,
+
                   <Link to ='/messages'>
                   <ChatIcon/></Link>, 
+
                   <Link to ='/favorite'>
                   <FavoriteBorderIcon/></Link>,
+                  
                    <AddCircleOutlineIcon  onClick={handleOpen}/>,
                    <Link to ='/profile'>
                    <Avatar alt="Nada" src={shop_assistant} style={{width:'30px', height:'30px'}}/></Link>
