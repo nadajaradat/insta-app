@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns'; // Import the formatDistanceToNow function
 import { useDrawer } from '../contexts/OpenDrawer';
-import { Avatar, Box, List, Typography } from '@mui/material';
+import { Avatar, Box, Button, List, Modal, Paper, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
@@ -13,6 +13,11 @@ import man from '../assets/Avatars/man.png';
 import nurse from '../assets/Avatars/nurse.png';
 import singer from '../assets/Avatars/singer.png';
 import steward from '../assets/Avatars/steward.png';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function generateRandomName() {
   const names = ['Alice', 'Bob', 'Charlie', 'David', 'Eva', 'Frank', 'Grace'];
@@ -32,7 +37,7 @@ function generateRandomAvatar() {
   const randomIndex = Math.floor(Math.random() * avatarUrls.length);
   return avatarUrls[randomIndex];
 }
-function Posts({ posts }) {
+function Posts({ posts, setPosts, token }) {
   const sortedPosts = [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   const { open, toggleDrawer } = useDrawer();
 
@@ -41,6 +46,71 @@ function Posts({ posts }) {
     const randomAvatar = generateRandomAvatar();
     return { name: randomName, avatar: randomAvatar };
   };
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
+
+  const openModal = (post) => {
+    setSelectedPost(post);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedPost(null);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    Navigate('/')
+  }
+
+
+  const handleDeletePost = (postId) => {
+    axios
+      .request({
+        method: "delete",
+        url: `http://16.170.173.197/posts/${postId}`,
+        data: {
+          id: postId,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        const updatedPosts= posts.filter((memory) => {
+          return memory.id !== postId;
+        });
+        setPosts(updatedPosts);
+      })
+      .catch((error) => {
+        console.error("Error deleting post:", error);
+      });
+  };
+
+  const handleEditPost = (postId) => {
+    const newDiscraption = prompt("please add the new disc");
+
+    axios
+      .request({
+        method: "put",
+        url: `http://16.170.173.197/posts/${postId}`,
+        data: {
+          description: newDiscraption,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error deleting post:", error);
+      });
+  };
+
 
   return (
     <List style={{ width: '500px', backgroundColor: 'black', marginLeft: '30px', minHeight: '1000px' }}>
@@ -52,6 +122,7 @@ function Posts({ posts }) {
               style={{
                 display: 'flex',
                 alignItems: 'self-start',
+                
               }}
             >
               <Avatar
@@ -62,6 +133,7 @@ function Posts({ posts }) {
               <Typography variant="caption" color={'white'} style={{ marginTop: '10px', marginBottom: '5px', marginLeft: '10px' }}>
                 {randomData.name}. {formatDistanceToNow(new Date(post.createdAt))}
               </Typography>
+              <MoreVertIcon style={{}} onClick={() => openModal(post)}></MoreVertIcon>
             </div>
 
             <img
@@ -107,6 +179,13 @@ function Posts({ posts }) {
           </div>
         );
       })}
+      <Modal open={isModalOpen} onClose={closeModal}>
+        <Paper style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', justifyContent: 'center', alignItems:'center' }}>
+          <Typography variant="h6">Post Options</Typography>
+          <Button startIcon={<EditIcon />} onClick={() => handleEditPost(selectedPost)}>Edit</Button>
+          <Button startIcon={<DeleteIcon />} onClick={() => handleDeletePost(selectedPost)}>Delete</Button>
+        </Paper>
+      </Modal>
     </List>
   );
 }

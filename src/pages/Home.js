@@ -57,7 +57,7 @@ function Home() {
         </div>
         <div style={contentStyles}>
           <Story />
-          <Posts posts={posts} />
+          <Posts posts={posts} setPosts = {setPosts} token = {token}/>
         </div>
         <div style={suggestionsStyles}>
           <Suggestions />

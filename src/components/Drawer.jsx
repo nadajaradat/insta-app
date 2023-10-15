@@ -20,7 +20,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { useDrawer } from '../contexts/OpenDrawer';
 import { Link } from 'react-router-dom';
-import { Avatar, Box, Button, Grid, Input, Modal, Typography } from '@mui/material';
+import { Avatar, Box, Button, Input, Modal, Typography } from '@mui/material';
 import '../App.css';
 import axios from 'axios';
 
