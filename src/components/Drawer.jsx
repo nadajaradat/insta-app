@@ -119,22 +119,25 @@ export default function MiniDrawer({setPosts}) {
 
   function handleSubmit(event) {
     event.preventDefault();
-
-
-    axios.post("http://16.170.173.197/posts", formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data"
-      }
-    }).then((response) => {
-      console.log("🚀 ~ file: CreatePost.jsx:59 ~ handleSubmit ~ response:", response)
-      setPosts((prevPosts) => [...prevPosts, response.data])
-    }).catch((error) => {
-      console.log("Error:", error)
-    })
-
-    handleClose()
+  
+    axios
+      .post("http://16.170.173.197/posts", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("🚀 ~ file: CreatePost.jsx:59 ~ handleSubmit ~ response:", response);
+        setPosts((prevPosts) => [...prevPosts, response.data]);
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+  
+    handleClose();
   }
+  
 
   return (
 
@@ -274,7 +277,7 @@ sx={{
       Create a New Post
       <hr />
     </Typography>
-    <form>
+    <form on onSubmit={handleSubmit}>
       <Box
         sx={{
           display: "flex",
