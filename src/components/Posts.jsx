@@ -118,29 +118,32 @@ function Posts({ posts, setPosts, token }) {
         const randomData = generateRandomData();
         return (
           <div key={post.id}>
-            <div
+            
+          
+             <Box
               style={{
                 display: 'flex',
                 alignItems: 'self-start',
-                
+                marginTop: '10px',
               }}
             >
-              <Avatar
+              <span><Avatar
                 alt={post.description}
                 src={randomData.avatar}
                 style={{ backgroundColor: 'black', width: '38px', height: '38px', marginBottom:'10px' }}
-              />
-              <Typography variant="caption" color={'white'} style={{ marginTop: '10px', marginBottom: '5px', marginLeft: '10px' }}>
+              /></span>
+              <span> <Typography variant="caption" color={'white'} style={{ width: '100px' , backgroundColor:'blue', marginTop: '10px', marginBottom: '5px', marginLeft: '10px' }}>
                 {randomData.name}. {formatDistanceToNow(new Date(post.createdAt))}
-              </Typography>
-              <MoreVertIcon style={{}} onClick={() => openModal(post)}></MoreVertIcon>
-            </div>
+              </Typography></span>
+              <span><MoreVertIcon style={{ color: 'white', marginLeft: '380px' }} onClick={() => openModal(post)}  ></MoreVertIcon> </span>
+            </Box>
 
             <img
               alt={post.description}
               src={post.image}
               style={{ backgroundColor: 'black', width: '500px', height: '560px' }}
             />
+
 
             <Box
               style={{

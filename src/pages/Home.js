@@ -50,10 +50,10 @@ function Home() {
 
   return (
     <div style={{backgroundColor:'black',width:'100%'}}>
-      <Drawer setPosts={setPosts} />
+      
       <Container style={containerStyles}>
         <div style={drawerStyles}>
-          <Drawer />
+          <Drawer setPosts={setPosts}/>
         </div>
         <div style={contentStyles}>
           <Story />

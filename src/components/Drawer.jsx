@@ -90,6 +90,7 @@ export default function MiniDrawer({setPosts}) {
   const [openModal, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const [description, setdescription] = React.useState("");
   const [image, setImage] = React.useState(null)
   const [imageCover, setImageCover] = React.useState(null);
@@ -101,8 +102,7 @@ export default function MiniDrawer({setPosts}) {
   };
 
   const handleImageChange = (event) => {
-    if (event.target && event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
+    const file = event.target.files[0];
     setImage(file);
 
     const reader = new FileReader();
@@ -110,14 +110,13 @@ export default function MiniDrawer({setPosts}) {
       setImageCover(reader.result);
     };
     reader.readAsDataURL(file);
-  }
   };
 
   let formData = new FormData();
 
   formData.append("description", description)
   formData.append("image", image)
-  
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -136,7 +135,6 @@ export default function MiniDrawer({setPosts}) {
 
     handleClose()
   }
-
 
   return (
 
