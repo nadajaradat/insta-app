@@ -133,21 +133,21 @@ function Posts({ posts, setPosts, token }) {
                 style={{ backgroundColor: 'black', width: '38px', height: '38px', marginBottom:'10px' }}
               /></span>
               <Typography
-  variant="caption"
-  color="white"
-  style={{
-    width: '100px',
-    backgroundColor: 'black',
-    marginTop: '10px',
-    marginBottom: '5px',
-    marginLeft: '10px',
-    whiteSpace: 'nowrap', // Add this property
-  }}
->
+              variant="caption"
+              color="white"
+              style={{
+                width: '100px',
+                backgroundColor: 'black',
+                marginTop: '10px',
+                marginBottom: '5px',
+                marginLeft: '10px',
+                whiteSpace: 'nowrap', // Add this property
+              }}
+              >
   {randomData.name}. {formatDistanceToNow(new Date(post.createdAt))}
 </Typography>
 
-              <span><MoreVertIcon style={{ color: 'white', marginLeft: '380px' }} onClick={() => openModal(post)}  ></MoreVertIcon> </span>
+              <span><MoreVertIcon style={{ color: 'white', marginLeft: '340px' }} onClick={() => openModal(post)}  ></MoreVertIcon> </span>
             </Box>
 
             <img
