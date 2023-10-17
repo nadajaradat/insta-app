@@ -19,33 +19,12 @@ import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-function generateRandomName() {
-  const names = ['Alice', 'Bob', 'Charlie', 'David', 'Eva', 'Frank', 'Grace'];
-  const randomIndex = Math.floor(Math.random() * names.length);
-  return names[randomIndex];
-}
-function generateRandomAvatar() {
-  const avatarUrls = [
-    boy,
-    shop_assistant,
-    cock_man,
-    man,
-    nurse,
-    singer,
-    steward
-  ];
-  const randomIndex = Math.floor(Math.random() * avatarUrls.length);
-  return avatarUrls[randomIndex];
-}
+ 
 function Posts({ posts, setPosts, token }) {
   const sortedPosts = [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   const { open, toggleDrawer } = useDrawer();
 
-  const generateRandomData = () => {
-    const randomName = generateRandomName();
-    const randomAvatar = generateRandomAvatar();
-    return { name: randomName, avatar: randomAvatar };
-  };
+ 
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
@@ -71,33 +50,29 @@ function Posts({ posts, setPosts, token }) {
       .request({
         method: "delete",
         url: `http://16.170.173.197/posts/${postId}`,
-        data: {
-          id: postId,
-        },
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        const updatedPosts= posts.filter((memory) => {
-          return memory.id !== postId;
-        });
+        const updatedPosts = posts.filter((post) => post.id !== postId);
         setPosts(updatedPosts);
       })
       .catch((error) => {
         console.error("Error deleting post:", error);
       });
   };
+  
 
   const handleEditPost = (postId) => {
-    const newDiscraption = prompt("please add the new disc");
-
+    const newDescription = prompt("Please add the new description"+postId);
+  
     axios
       .request({
         method: "put",
         url: `http://16.170.173.197/posts/${postId}`,
         data: {
-          description: newDiscraption,
+          description: newDescription,
         },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -107,15 +82,17 @@ function Posts({ posts, setPosts, token }) {
         console.log(response);
       })
       .catch((error) => {
-        console.error("Error deleting post:", error);
+        console.error("Error editing post:", error);
       });
   };
+  
 
 
   return (
+    
     <List style={{ width: '500px', backgroundColor: 'black', marginLeft: '30px', minHeight: '1000px' }}>
-      {sortedPosts.map((post) => {
-        const randomData = generateRandomData();
+      {
+      sortedPosts.map((post) => {
         return (
           <div key={post.id}>
             
@@ -129,7 +106,7 @@ function Posts({ posts, setPosts, token }) {
             >
               <span><Avatar
                 alt={post.description}
-                src={randomData.avatar}
+                src={post.user.avatar}
                 style={{ backgroundColor: 'black', width: '38px', height: '38px', marginBottom:'10px' }}
               /></span>
               <Typography
@@ -144,10 +121,10 @@ function Posts({ posts, setPosts, token }) {
                 whiteSpace: 'nowrap', // Add this property
               }}
               >
-  {randomData.name}. {formatDistanceToNow(new Date(post.createdAt))}
+              {post.user.userName}. {formatDistanceToNow(new Date(post.createdAt))}
 </Typography>
 
-              <span><MoreVertIcon style={{ color: 'white', marginLeft: '340px' }} onClick={() => openModal(post)}  ></MoreVertIcon> </span>
+              <span><MoreVertIcon style={{ color: 'white', marginLeft: '340px' }} onClick={() => openModal(post.id)}  ></MoreVertIcon> </span>
             </Box>
 
             <img
@@ -177,7 +154,7 @@ function Posts({ posts, setPosts, token }) {
                 color: 'white',
                 marginTop: '10px',
               }}>
-              774 likes
+              {post.likes.length} likes {post.id}
             </Box>
             <Box
               style={{
@@ -194,13 +171,14 @@ function Posts({ posts, setPosts, token }) {
           </div>
         );
       })}
-      <Modal open={isModalOpen} onClose={closeModal}>
-        <Paper style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', justifyContent: 'center', alignItems:'center' }}>
-          <Typography variant="h6">Post Options</Typography>
-          <Button startIcon={<EditIcon />} onClick={() => handleEditPost(selectedPost)}>Edit</Button>
-          <Button startIcon={<DeleteIcon />} onClick={() => handleDeletePost(selectedPost)}>Delete</Button>
-        </Paper>
-      </Modal>
+      <Modal open={isModalOpen} onClose={closeModal} >
+  <Paper style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', justifyContent: 'center', alignItems: 'center' }}>
+    <Typography variant="h6">Post Options</Typography>
+    <Button startIcon={<EditIcon />} onClick={() => handleEditPost(selectedPost)}>Edit</Button>
+    <Button startIcon={<DeleteIcon />} onClick={() => handleDeletePost(selectedPost)}>Delete</Button>
+  </Paper>
+</Modal>
+
     </List>
   );
 }
